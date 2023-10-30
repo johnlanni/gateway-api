@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Kubernetes Authors.
+Copyright 2022 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,15 +17,23 @@ limitations under the License.
 package validation
 
 import (
-	"k8s.io/apimachinery/pkg/util/validation/field"
-
 	gatewayv1a2 "sigs.k8s.io/gateway-api/apis/v1alpha2"
-	gatewayv1b1validation "sigs.k8s.io/gateway-api/apis/v1beta1/validation"
+	"sigs.k8s.io/gateway-api/apis/v1beta1"
 )
 
-// ValidateHTTPRoute validates HTTPRoute according to the Gateway API specification.
-// For additional details of the HTTPRoute spec, refer to:
-// https://gateway-api.sigs.k8s.io/v1beta1/references/spec/#gateway.networking.k8s.io/v1beta1.HTTPRoute
-func ValidateHTTPRoute(route *gatewayv1a2.HTTPRoute) field.ErrorList {
-	return gatewayv1b1validation.ValidateHTTPRouteSpec(&route.Spec, field.NewPath("spec"))
+type routeRule interface {
+	gatewayv1a2.TLSRouteRule | gatewayv1a2.UDPRouteRule
+}
+
+func makeRouteRules[T routeRule](ports ...*int32) (rules []T) {
+	for _, port := range ports {
+		rules = append(rules, T{
+			BackendRefs: []gatewayv1a2.BackendRef{{
+				BackendObjectReference: gatewayv1a2.BackendObjectReference{
+					Port: (*v1beta1.PortNumber)(port),
+				},
+			}},
+		})
+	}
+	return
 }

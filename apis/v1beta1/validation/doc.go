@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Kubernetes Authors.
+Copyright 2021 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,9 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Package v1alpha2 contains API Schema definitions for the
-// gateway.networking.k8s.io API group.
-//
-// +kubebuilder:object:generate=true
-// +groupName=gateway.networking.k8s.io
-package v1alpha2
+// Package validation has functions for validating the correctness of api
+// objects and explaining what's wrong with them when they're not valid.
+package validation // import "sigs.k8s.io/gateway-api/apis/v1beta1/validation"
