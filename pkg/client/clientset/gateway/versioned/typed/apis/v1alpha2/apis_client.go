@@ -52,7 +52,7 @@ func (c *GatewayV1alpha2Client) HTTPRoutes(namespace string) HTTPRouteInterface 
 	return newHTTPRoutes(c, namespace)
 }
 
-func (c *GatewayV1alpha2Client) ReferencePolicies(namespace string) ReferencePolicyInterface {
+func (c *GatewayV1alpha2Client) ReferencePolicies(namespace string) ReferenceGrantInterface {
 	return newReferencePolicies(c, namespace)
 }
 

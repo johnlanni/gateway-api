@@ -40,7 +40,7 @@ func (c *FakeGatewayV1alpha2) HTTPRoutes(namespace string) v1alpha2.HTTPRouteInt
 	return &FakeHTTPRoutes{c, namespace}
 }
 
-func (c *FakeGatewayV1alpha2) ReferencePolicies(namespace string) v1alpha2.ReferencePolicyInterface {
+func (c *FakeGatewayV1alpha2) ReferencePolicies(namespace string) v1alpha2.ReferenceGrantInterface {
 	return &FakeReferencePolicies{c, namespace}
 }
 

@@ -25,75 +25,75 @@ import (
 	v1alpha2 "sigs.k8s.io/gateway-api/apis/v1alpha2"
 )
 
-// ReferencePolicyLister helps list ReferencePolicies.
+// ReferenceGrantLister helps list ReferencePolicies.
 // All objects returned here must be treated as read-only.
-type ReferencePolicyLister interface {
+type ReferenceGrantLister interface {
 	// List lists all ReferencePolicies in the indexer.
 	// Objects returned here must be treated as read-only.
-	List(selector labels.Selector) (ret []*v1alpha2.ReferencePolicy, err error)
+	List(selector labels.Selector) (ret []*v1alpha2.ReferenceGrant, err error)
 	// ReferencePolicies returns an object that can list and get ReferencePolicies.
-	ReferencePolicies(namespace string) ReferencePolicyNamespaceLister
-	ReferencePolicyListerExpansion
+	ReferencePolicies(namespace string) ReferenceGrantNamespaceLister
+	ReferenceGrantListerExpansion
 }
 
-// referencePolicyLister implements the ReferencePolicyLister interface.
-type referencePolicyLister struct {
+// referenceGrantLister implements the ReferenceGrantLister interface.
+type referenceGrantLister struct {
 	indexer cache.Indexer
 }
 
-// NewReferencePolicyLister returns a new ReferencePolicyLister.
-func NewReferencePolicyLister(indexer cache.Indexer) ReferencePolicyLister {
-	return &referencePolicyLister{indexer: indexer}
+// NewReferenceGrantLister returns a new ReferenceGrantLister.
+func NewReferenceGrantLister(indexer cache.Indexer) ReferenceGrantLister {
+	return &referenceGrantLister{indexer: indexer}
 }
 
 // List lists all ReferencePolicies in the indexer.
-func (s *referencePolicyLister) List(selector labels.Selector) (ret []*v1alpha2.ReferencePolicy, err error) {
+func (s *referenceGrantLister) List(selector labels.Selector) (ret []*v1alpha2.ReferenceGrant, err error) {
 	err = cache.ListAll(s.indexer, selector, func(m interface{}) {
-		ret = append(ret, m.(*v1alpha2.ReferencePolicy))
+		ret = append(ret, m.(*v1alpha2.ReferenceGrant))
 	})
 	return ret, err
 }
 
 // ReferencePolicies returns an object that can list and get ReferencePolicies.
-func (s *referencePolicyLister) ReferencePolicies(namespace string) ReferencePolicyNamespaceLister {
-	return referencePolicyNamespaceLister{indexer: s.indexer, namespace: namespace}
+func (s *referenceGrantLister) ReferencePolicies(namespace string) ReferenceGrantNamespaceLister {
+	return referenceGrantNamespaceLister{indexer: s.indexer, namespace: namespace}
 }
 
-// ReferencePolicyNamespaceLister helps list and get ReferencePolicies.
+// ReferenceGrantNamespaceLister helps list and get ReferencePolicies.
 // All objects returned here must be treated as read-only.
-type ReferencePolicyNamespaceLister interface {
+type ReferenceGrantNamespaceLister interface {
 	// List lists all ReferencePolicies in the indexer for a given namespace.
 	// Objects returned here must be treated as read-only.
-	List(selector labels.Selector) (ret []*v1alpha2.ReferencePolicy, err error)
-	// Get retrieves the ReferencePolicy from the indexer for a given namespace and name.
+	List(selector labels.Selector) (ret []*v1alpha2.ReferenceGrant, err error)
+	// Get retrieves the ReferenceGrant from the indexer for a given namespace and name.
 	// Objects returned here must be treated as read-only.
-	Get(name string) (*v1alpha2.ReferencePolicy, error)
-	ReferencePolicyNamespaceListerExpansion
+	Get(name string) (*v1alpha2.ReferenceGrant, error)
+	ReferenceGrantNamespaceListerExpansion
 }
 
-// referencePolicyNamespaceLister implements the ReferencePolicyNamespaceLister
+// referenceGrantNamespaceLister implements the ReferenceGrantNamespaceLister
 // interface.
-type referencePolicyNamespaceLister struct {
+type referenceGrantNamespaceLister struct {
 	indexer   cache.Indexer
 	namespace string
 }
 
 // List lists all ReferencePolicies in the indexer for a given namespace.
-func (s referencePolicyNamespaceLister) List(selector labels.Selector) (ret []*v1alpha2.ReferencePolicy, err error) {
+func (s referenceGrantNamespaceLister) List(selector labels.Selector) (ret []*v1alpha2.ReferenceGrant, err error) {
 	err = cache.ListAllByNamespace(s.indexer, s.namespace, selector, func(m interface{}) {
-		ret = append(ret, m.(*v1alpha2.ReferencePolicy))
+		ret = append(ret, m.(*v1alpha2.ReferenceGrant))
 	})
 	return ret, err
 }
 
-// Get retrieves the ReferencePolicy from the indexer for a given namespace and name.
-func (s referencePolicyNamespaceLister) Get(name string) (*v1alpha2.ReferencePolicy, error) {
+// Get retrieves the ReferenceGrant from the indexer for a given namespace and name.
+func (s referenceGrantNamespaceLister) Get(name string) (*v1alpha2.ReferenceGrant, error) {
 	obj, exists, err := s.indexer.GetByKey(s.namespace + "/" + name)
 	if err != nil {
 		return nil, err
 	}
 	if !exists {
-		return nil, errors.NewNotFound(v1alpha2.Resource("referencepolicy"), name)
+		return nil, errors.NewNotFound(v1alpha2.Resource("referencegrant"), name)
 	}
-	return obj.(*v1alpha2.ReferencePolicy), nil
+	return obj.(*v1alpha2.ReferenceGrant), nil
 }

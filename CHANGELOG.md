@@ -56,7 +56,7 @@ The following changes have been made since v0.3.0:
   * By default, references across namespaces are not permitted; creating a
     reference across a namespace (like a Route referencing a Service in another
     namespace) must be rejected by implementations.
-  * These references can be accepted by creating a ReferencePolicy in the
+  * These references can be accepted by creating a ReferenceGrant in the
     referent (target) namespace, that specifies what Kind is allowed to accept
     incoming references, and from what namespace and Kind the references may be.
 
@@ -105,7 +105,7 @@ The following changes have been made since v0.3.0:
   difficult, let alone actually implementing it.
 
   In removing certificate references from HTTPRoute, we're using the
-  ReferencePolicy from GEP-709 to allow Gateways to securely create a
+  ReferenceGrant from GEP-709 to allow Gateways to securely create a
   cross-namespace reference to TLS keypairs in app namespaces.
   We're hopeful that this will hit most of the self-service use case, and even
   if not, provide a basis to build from to meet it eventually.
@@ -291,7 +291,7 @@ matches have been removed.
 [#850](https://github.com/kubernetes-sigs/gateway-api/pull/850)
 * The "Prefix" path match type has been renamed "PathPrefix".
 * The "ClassName" field in PolicyTargetReference has been removed.
-* A new optional "Name" field has been added to ReferencePolicyTo.
+* A new optional "Name" field has been added to ReferenceGrantTo.
 [#898](https://github.com/kubernetes-sigs/gateway-api/pull/898)
 
 ### Field Renames
@@ -399,7 +399,7 @@ new behavior is:
   * By default, references across namespaces are not permitted; creating a
   reference across a namespace (like a Route referencing a Service in another
   namespace) must be rejected by implementations.
-  * These references can be accepted by creating a ReferencePolicy in the
+  * These references can be accepted by creating a ReferenceGrant in the
   referent (target) namespace, that specifies what Kind is allowed to accept
   incoming references, and from what namespace and Kind the references may be.
 
@@ -449,7 +449,7 @@ now better handled using that mechanism. [#732](https://github.com/kubernetes-si
   difficult, let alone actually implementing it.
 
   In removing certificate references from HTTPRoute, we're using the
-  ReferencePolicy from GEP-709 to allow Gateways to securely create a
+  ReferenceGrant from GEP-709 to allow Gateways to securely create a
   cross-namespace reference to TLS keypairs in app namespaces.
   We're hopeful that this will hit most of the self-service use case, and even
   if not, provide a basis to build from to meet it eventually.

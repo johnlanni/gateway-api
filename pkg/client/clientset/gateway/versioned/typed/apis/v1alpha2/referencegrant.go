@@ -30,26 +30,26 @@ import (
 	scheme "sigs.k8s.io/gateway-api/pkg/client/clientset/gateway/versioned/scheme"
 )
 
-// ReferencePoliciesGetter has a method to return a ReferencePolicyInterface.
+// ReferencePoliciesGetter has a method to return a ReferenceGrantInterface.
 // A group's client should implement this interface.
 type ReferencePoliciesGetter interface {
-	ReferencePolicies(namespace string) ReferencePolicyInterface
+	ReferencePolicies(namespace string) ReferenceGrantInterface
 }
 
-// ReferencePolicyInterface has methods to work with ReferencePolicy resources.
-type ReferencePolicyInterface interface {
-	Create(ctx context.Context, referencePolicy *v1alpha2.ReferencePolicy, opts v1.CreateOptions) (*v1alpha2.ReferencePolicy, error)
-	Update(ctx context.Context, referencePolicy *v1alpha2.ReferencePolicy, opts v1.UpdateOptions) (*v1alpha2.ReferencePolicy, error)
+// ReferenceGrantInterface has methods to work with ReferenceGrant resources.
+type ReferenceGrantInterface interface {
+	Create(ctx context.Context, referenceGrant *v1alpha2.ReferenceGrant, opts v1.CreateOptions) (*v1alpha2.ReferenceGrant, error)
+	Update(ctx context.Context, referenceGrant *v1alpha2.ReferenceGrant, opts v1.UpdateOptions) (*v1alpha2.ReferenceGrant, error)
 	Delete(ctx context.Context, name string, opts v1.DeleteOptions) error
 	DeleteCollection(ctx context.Context, opts v1.DeleteOptions, listOpts v1.ListOptions) error
-	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha2.ReferencePolicy, error)
-	List(ctx context.Context, opts v1.ListOptions) (*v1alpha2.ReferencePolicyList, error)
+	Get(ctx context.Context, name string, opts v1.GetOptions) (*v1alpha2.ReferenceGrant, error)
+	List(ctx context.Context, opts v1.ListOptions) (*v1alpha2.ReferenceGrantList, error)
 	Watch(ctx context.Context, opts v1.ListOptions) (watch.Interface, error)
-	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha2.ReferencePolicy, err error)
-	ReferencePolicyExpansion
+	Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha2.ReferenceGrant, err error)
+	ReferenceGrantExpansion
 }
 
-// referencePolicies implements ReferencePolicyInterface
+// referencePolicies implements ReferenceGrantInterface
 type referencePolicies struct {
 	client rest.Interface
 	ns     string
@@ -63,9 +63,9 @@ func newReferencePolicies(c *GatewayV1alpha2Client, namespace string) *reference
 	}
 }
 
-// Get takes name of the referencePolicy, and returns the corresponding referencePolicy object, and an error if there is any.
-func (c *referencePolicies) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha2.ReferencePolicy, err error) {
-	result = &v1alpha2.ReferencePolicy{}
+// Get takes name of the referenceGrant, and returns the corresponding referenceGrant object, and an error if there is any.
+func (c *referencePolicies) Get(ctx context.Context, name string, options v1.GetOptions) (result *v1alpha2.ReferenceGrant, err error) {
+	result = &v1alpha2.ReferenceGrant{}
 	err = c.client.Get().
 		Namespace(c.ns).
 		Resource("referencepolicies").
@@ -77,12 +77,12 @@ func (c *referencePolicies) Get(ctx context.Context, name string, options v1.Get
 }
 
 // List takes label and field selectors, and returns the list of ReferencePolicies that match those selectors.
-func (c *referencePolicies) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha2.ReferencePolicyList, err error) {
+func (c *referencePolicies) List(ctx context.Context, opts v1.ListOptions) (result *v1alpha2.ReferenceGrantList, err error) {
 	var timeout time.Duration
 	if opts.TimeoutSeconds != nil {
 		timeout = time.Duration(*opts.TimeoutSeconds) * time.Second
 	}
-	result = &v1alpha2.ReferencePolicyList{}
+	result = &v1alpha2.ReferenceGrantList{}
 	err = c.client.Get().
 		Namespace(c.ns).
 		Resource("referencepolicies").
@@ -108,34 +108,34 @@ func (c *referencePolicies) Watch(ctx context.Context, opts v1.ListOptions) (wat
 		Watch(ctx)
 }
 
-// Create takes the representation of a referencePolicy and creates it.  Returns the server's representation of the referencePolicy, and an error, if there is any.
-func (c *referencePolicies) Create(ctx context.Context, referencePolicy *v1alpha2.ReferencePolicy, opts v1.CreateOptions) (result *v1alpha2.ReferencePolicy, err error) {
-	result = &v1alpha2.ReferencePolicy{}
+// Create takes the representation of a referenceGrant and creates it.  Returns the server's representation of the referenceGrant, and an error, if there is any.
+func (c *referencePolicies) Create(ctx context.Context, referenceGrant *v1alpha2.ReferenceGrant, opts v1.CreateOptions) (result *v1alpha2.ReferenceGrant, err error) {
+	result = &v1alpha2.ReferenceGrant{}
 	err = c.client.Post().
 		Namespace(c.ns).
 		Resource("referencepolicies").
 		VersionedParams(&opts, scheme.ParameterCodec).
-		Body(referencePolicy).
+		Body(referenceGrant).
 		Do(ctx).
 		Into(result)
 	return
 }
 
-// Update takes the representation of a referencePolicy and updates it. Returns the server's representation of the referencePolicy, and an error, if there is any.
-func (c *referencePolicies) Update(ctx context.Context, referencePolicy *v1alpha2.ReferencePolicy, opts v1.UpdateOptions) (result *v1alpha2.ReferencePolicy, err error) {
-	result = &v1alpha2.ReferencePolicy{}
+// Update takes the representation of a referenceGrant and updates it. Returns the server's representation of the referenceGrant, and an error, if there is any.
+func (c *referencePolicies) Update(ctx context.Context, referenceGrant *v1alpha2.ReferenceGrant, opts v1.UpdateOptions) (result *v1alpha2.ReferenceGrant, err error) {
+	result = &v1alpha2.ReferenceGrant{}
 	err = c.client.Put().
 		Namespace(c.ns).
 		Resource("referencepolicies").
-		Name(referencePolicy.Name).
+		Name(referenceGrant.Name).
 		VersionedParams(&opts, scheme.ParameterCodec).
-		Body(referencePolicy).
+		Body(referenceGrant).
 		Do(ctx).
 		Into(result)
 	return
 }
 
-// Delete takes name of the referencePolicy and deletes it. Returns an error if one occurs.
+// Delete takes name of the referenceGrant and deletes it. Returns an error if one occurs.
 func (c *referencePolicies) Delete(ctx context.Context, name string, opts v1.DeleteOptions) error {
 	return c.client.Delete().
 		Namespace(c.ns).
@@ -162,9 +162,9 @@ func (c *referencePolicies) DeleteCollection(ctx context.Context, opts v1.Delete
 		Error()
 }
 
-// Patch applies the patch and returns the patched referencePolicy.
-func (c *referencePolicies) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha2.ReferencePolicy, err error) {
-	result = &v1alpha2.ReferencePolicy{}
+// Patch applies the patch and returns the patched referenceGrant.
+func (c *referencePolicies) Patch(ctx context.Context, name string, pt types.PatchType, data []byte, opts v1.PatchOptions, subresources ...string) (result *v1alpha2.ReferenceGrant, err error) {
+	result = &v1alpha2.ReferenceGrant{}
 	err = c.client.Patch(pt).
 		Namespace(c.ns).
 		Resource("referencepolicies").
