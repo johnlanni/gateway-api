@@ -6,7 +6,7 @@ metadata:
   annotations:
     api-approved.kubernetes.io: https://github.com/kubernetes-sigs/gateway-api/pull/891
   creationTimestamp: null
-  name: referencepolicies.gateway.networking.k8s.io
+  name: referencegrants.gateway.networking.k8s.io
 spec:
   group: gateway.networking.k8s.io
   names:
@@ -14,7 +14,7 @@ spec:
     - gateway-api
     kind: ReferenceGrant
     listKind: ReferenceGrantList
-    plural: referencepolicies
+    plural: referencegrants
     shortNames:
     - refpol
     singular: referencegrant

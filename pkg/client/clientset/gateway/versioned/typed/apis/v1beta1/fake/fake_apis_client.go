@@ -21,44 +21,44 @@ package fake
 import (
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
-	v1alpha2 "sigs.k8s.io/gateway-api/pkg/client/clientset/gateway/versioned/typed/apis/v1alpha2"
+	v1beta1 "sigs.k8s.io/gateway-api/pkg/client/clientset/gateway/versioned/typed/apis/v1beta1"
 )
 
-type FakeGatewayV1alpha2 struct {
+type FakeGatewayV1beta1 struct {
 	*testing.Fake
 }
 
-func (c *FakeGatewayV1alpha2) Gateways(namespace string) v1alpha2.GatewayInterface {
+func (c *FakeGatewayV1beta1) Gateways(namespace string) v1beta1.GatewayInterface {
 	return &FakeGateways{c, namespace}
 }
 
-func (c *FakeGatewayV1alpha2) GatewayClasses() v1alpha2.GatewayClassInterface {
+func (c *FakeGatewayV1beta1) GatewayClasses() v1beta1.GatewayClassInterface {
 	return &FakeGatewayClasses{c}
 }
 
-func (c *FakeGatewayV1alpha2) HTTPRoutes(namespace string) v1alpha2.HTTPRouteInterface {
+func (c *FakeGatewayV1beta1) HTTPRoutes(namespace string) v1beta1.HTTPRouteInterface {
 	return &FakeHTTPRoutes{c, namespace}
 }
 
-func (c *FakeGatewayV1alpha2) ReferenceGrants(namespace string) v1alpha2.ReferenceGrantInterface {
+func (c *FakeGatewayV1beta1) ReferenceGrants(namespace string) v1beta1.ReferenceGrantInterface {
 	return &FakeReferenceGrants{c, namespace}
 }
 
-func (c *FakeGatewayV1alpha2) TCPRoutes(namespace string) v1alpha2.TCPRouteInterface {
+func (c *FakeGatewayV1beta1) TCPRoutes(namespace string) v1beta1.TCPRouteInterface {
 	return &FakeTCPRoutes{c, namespace}
 }
 
-func (c *FakeGatewayV1alpha2) TLSRoutes(namespace string) v1alpha2.TLSRouteInterface {
+func (c *FakeGatewayV1beta1) TLSRoutes(namespace string) v1beta1.TLSRouteInterface {
 	return &FakeTLSRoutes{c, namespace}
 }
 
-func (c *FakeGatewayV1alpha2) UDPRoutes(namespace string) v1alpha2.UDPRouteInterface {
+func (c *FakeGatewayV1beta1) UDPRoutes(namespace string) v1beta1.UDPRouteInterface {
 	return &FakeUDPRoutes{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *FakeGatewayV1alpha2) RESTClient() rest.Interface {
+func (c *FakeGatewayV1beta1) RESTClient() rest.Interface {
 	var ret *rest.RESTClient
 	return ret
 }

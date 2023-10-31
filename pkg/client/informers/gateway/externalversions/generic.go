@@ -24,6 +24,7 @@ import (
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 	v1alpha2 "sigs.k8s.io/gateway-api/apis/v1alpha2"
+	v1beta1 "sigs.k8s.io/gateway-api/apis/v1beta1"
 )
 
 // GenericInformer is type of SharedIndexInformer which will locate and delegate to other
@@ -52,6 +53,14 @@ func (f *genericInformer) Lister() cache.GenericLister {
 // TODO extend this to unknown resources with a client pool
 func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource) (GenericInformer, error) {
 	switch resource {
+	case v1beta1.SchemeGroupVersion.WithResource("gateways"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Gateway().V1beta1().Gateways().Informer()}, nil
+	case v1beta1.SchemeGroupVersion.WithResource("gatewayclasses"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Gateway().V1beta1().GatewayClasses().Informer()}, nil
+	case v1beta1.SchemeGroupVersion.WithResource("httproutes"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Gateway().V1beta1().HTTPRoutes().Informer()}, nil
+	case v1beta1.SchemeGroupVersion.WithResource("referencegrants"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Gateway().V1beta1().ReferenceGrants().Informer()}, nil
 	// Group=gateway.networking.k8s.io, Version=v1alpha2
 	case v1alpha2.SchemeGroupVersion.WithResource("gateways"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Gateway().V1alpha2().Gateways().Informer()}, nil
@@ -59,8 +68,8 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Gateway().V1alpha2().GatewayClasses().Informer()}, nil
 	case v1alpha2.SchemeGroupVersion.WithResource("httproutes"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Gateway().V1alpha2().HTTPRoutes().Informer()}, nil
-	case v1alpha2.SchemeGroupVersion.WithResource("referencepolicies"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Gateway().V1alpha2().ReferencePolicies().Informer()}, nil
+	case v1alpha2.SchemeGroupVersion.WithResource("referencegrants"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Gateway().V1alpha2().ReferenceGrants().Informer()}, nil
 	case v1alpha2.SchemeGroupVersion.WithResource("tcproutes"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Gateway().V1alpha2().TCPRoutes().Informer()}, nil
 	case v1alpha2.SchemeGroupVersion.WithResource("tlsroutes"):
