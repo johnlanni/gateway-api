@@ -30,9 +30,6 @@ type GatewayV1beta1Interface interface {
 	GatewayClassesGetter
 	HTTPRoutesGetter
 	ReferenceGrantsGetter
-	TCPRoutesGetter
-	TLSRoutesGetter
-	UDPRoutesGetter
 }
 
 // GatewayV1beta1Client is used to interact with features provided by the gateway.networking.k8s.io group.
@@ -54,18 +51,6 @@ func (c *GatewayV1beta1Client) HTTPRoutes(namespace string) HTTPRouteInterface {
 
 func (c *GatewayV1beta1Client) ReferenceGrants(namespace string) ReferenceGrantInterface {
 	return newReferenceGrants(c, namespace)
-}
-
-func (c *GatewayV1beta1Client) TCPRoutes(namespace string) TCPRouteInterface {
-	return newTCPRoutes(c, namespace)
-}
-
-func (c *GatewayV1beta1Client) TLSRoutes(namespace string) TLSRouteInterface {
-	return newTLSRoutes(c, namespace)
-}
-
-func (c *GatewayV1beta1Client) UDPRoutes(namespace string) UDPRouteInterface {
-	return newUDPRoutes(c, namespace)
 }
 
 // NewForConfig creates a new GatewayV1beta1Client for the given config.

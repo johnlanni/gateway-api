@@ -44,18 +44,6 @@ func (c *FakeGatewayV1beta1) ReferenceGrants(namespace string) v1beta1.Reference
 	return &FakeReferenceGrants{c, namespace}
 }
 
-func (c *FakeGatewayV1beta1) TCPRoutes(namespace string) v1beta1.TCPRouteInterface {
-	return &FakeTCPRoutes{c, namespace}
-}
-
-func (c *FakeGatewayV1beta1) TLSRoutes(namespace string) v1beta1.TLSRouteInterface {
-	return &FakeTLSRoutes{c, namespace}
-}
-
-func (c *FakeGatewayV1beta1) UDPRoutes(namespace string) v1beta1.UDPRouteInterface {
-	return &FakeUDPRoutes{c, namespace}
-}
-
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
 func (c *FakeGatewayV1beta1) RESTClient() rest.Interface {
